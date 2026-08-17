@@ -35,9 +35,9 @@ The platform is designed around the following security objectives:
 
 ## Phase 1 — Healthcare Workload Design
 
-**Status: Complete — pending final PR merge**
+**Status: Complete — merged to `main`**
 
-Phase 1 establishes the approved design baseline before cloud implementation.
+Phase 1 established the approved design baseline before cloud implementation.
 
 ### Completed
 
@@ -55,6 +55,7 @@ Phase 1 establishes the approved design baseline before cloud implementation.
 - Initial technical risk register
 - Controlled failure and attack scenario register
 - Final architecture diagram set
+- Project-level README
 
 ## Architecture Diagrams
 
@@ -204,7 +205,7 @@ The project is designed for short-lived, cost-conscious lab execution.
 | Phase | Focus | Status |
 |---|---|---|
 | Phase 1 | Healthcare Workload Design | **Complete** |
-| Phase 2 | AWS Security Foundation and Network Segmentation | Planned |
+| Phase 2 | AWS Security Foundation and Network Segmentation | **In Progress** |
 | Phase 3 | AWS IAM and Workload Identity | Planned |
 | Phase 4 | KMS Encryption Boundaries and Secrets | Planned |
 | Phase 5 | Application Compute, ALB and WAF | Planned |
@@ -242,4 +243,4 @@ It is **not**:
 
 ## Project Status
 
-**Current state:** Phase 1 design baseline complete. The Phase 1 branch is undergoing final verification before merge to `main`. Cloud implementation begins only after Phase 1 closure.
+**Current state:** Phase 1 is complete and merged to `main`. Phase 2 — AWS Security Foundation and Network Segmentation — is now the active implementation phase.
