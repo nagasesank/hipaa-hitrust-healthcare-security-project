@@ -1,45 +1,87 @@
 # HIPAA/HITRUST-Aligned Multi-Cloud Healthcare Security Engineering Platform
 
-A production-style, portfolio-grade healthcare security engineering project demonstrating technical safeguards and security engineering practices for a synthetic ePHI healthcare workload across AWS and GCP.
+A production-style, portfolio-grade healthcare security engineering project demonstrating how a synthetic-ePHI healthcare workload can be designed, secured, validated, attacked in a controlled manner, remediated, and evidenced across AWS and GCP.
 
-> **Important:** This project does not claim HIPAA compliance, HIPAA certification, HITRUST certification, or any formal compliance attestation. It demonstrates technical architecture and implementation patterns aligned with selected HIPAA Security Rule objectives and informed by HITRUST CSF control objectives.
+> **Compliance positioning:** This is a technical security architecture and implementation project. It does **not** claim HIPAA compliance, HIPAA certification, HITRUST certification, or any formal compliance attestation.
 
-## Project Strategy
+## Executive View
 
-- **AWS** — primary deep implementation environment
-- **GCP** — secondary control-equivalent implementation
-- **Data** — synthetic ePHI only
-- **Infrastructure** — Terraform
-- **Validation** — AWS CLI / GCP CLI and cloud-console verification where useful
-- **Evidence** — implementation, validation, failure, remediation, and teardown evidence
-- **Design principle** — equivalent security objectives across clouds, not one-to-one service duplication
+The project uses **AWS as the primary deep implementation platform** and **GCP as a secondary control-equivalent platform**.
 
-## Security Objectives
+The engineering objective is not to reproduce every AWS service in GCP. Instead, the project demonstrates equivalent security objectives across cloud providers while maintaining a common healthcare threat model, control model, evidence model, and failure/remediation methodology.
 
-The platform is designed around the following security objectives:
+```text
+                    HIPAA / HITRUST-INFORMED
+                       SECURITY OBJECTIVES
+                                │
+                                ▼
+                 ┌──────────────────────────┐
+                 │ Healthcare Workload      │
+                 │ Synthetic ePHI only     │
+                 └────────────┬─────────────┘
+                              │
+                ┌─────────────┴─────────────┐
+                ▼                           ▼
+        ┌─────────────────┐       ┌─────────────────┐
+        │ AWS             │       │ GCP             │
+        │ Primary Deep    │       │ Control-        │
+        │ Implementation  │       │ Equivalent      │
+        └────────┬────────┘       └────────┬────────┘
+                 │                         │
+                 └────────────┬────────────┘
+                              ▼
+                 ┌──────────────────────────┐
+                 │ Validation & Evidence    │
+                 │ CLI / Console / Tests   │
+                 └────────────┬─────────────┘
+                              ▼
+                 ┌──────────────────────────┐
+                 │ Controlled Failure       │
+                 │ → Investigation          │
+                 │ → Remediation            │
+                 │ → Revalidation           │
+                 └────────────┬─────────────┘
+                              ▼
+                 ┌──────────────────────────┐
+                 │ Destroy & Verify         │
+                 │ No residual lab infra    │
+                 └──────────────────────────┘
+```
 
-- Strong workforce authentication and MFA
-- Least-privilege human and workload identities
-- Private application and data tiers
-- Controlled internet ingress through edge security controls
-- Restricted egress paths
-- Encryption-domain separation using cloud KMS capabilities
-- Dedicated secret-management boundaries
-- Infrastructure and application-level auditability
-- Configuration compliance and drift visibility
-- Threat detection and security finding aggregation
-- Synthetic ePHI discovery and exposure validation where justified
-- Backup isolation and recovery assurance
-- Incident-response orchestration readiness
-- Cross-cloud blast-radius reduction
+## Project Goals
+
+- Translate healthcare security requirements into concrete cloud security controls.
+- Maintain private application and data boundaries for synthetic ePHI.
+- Apply least privilege, encryption, secrets management, logging, detection, backup, and incident-response controls.
+- Demonstrate security failures deliberately rather than only showing successful deployments.
+- Produce auditable engineering evidence for each implementation phase.
+- Compare AWS and GCP through control objectives rather than superficial service-by-service parity.
+- Keep the implementation cost-conscious and destroy short-lived lab infrastructure after validation.
+
+## Phase Roadmap
+
+| Phase | Focus | Status |
+|---|---|---|
+| **01** | Healthcare Workload Design | **Complete** |
+| **02** | AWS Security Foundation & Network Segmentation | **In Progress** |
+| **03** | AWS IAM & Workload Identity | Planned |
+| **04** | KMS Encryption Boundaries & Secrets | Planned |
+| **05** | Application Compute, ALB & WAF | Planned |
+| **06** | RDS & S3 Synthetic ePHI Data Plane | Planned |
+| **07** | Audit Logging, Config & Observability | Planned |
+| **08** | Threat Detection & Security Findings | Planned |
+| **09** | Backup & Recovery Isolation | Planned |
+| **10** | Incident Response & Automation | Planned |
+| **11** | GCP Control-Equivalent Implementation | Planned |
+| **12** | Cross-Cloud Attack Scenarios & Final Evidence | Planned |
 
 ## Phase 1 — Healthcare Workload Design
 
-**Status: Complete — merged to `main`**
+**Status: Complete and merged to `main`.**
 
-Phase 1 established the approved design baseline before cloud implementation.
+Phase 1 established the approved source-of-truth design before cloud implementation began.
 
-### Completed
+Key outputs:
 
 - Healthcare workload architecture
 - AWS primary security architecture
@@ -53,68 +95,81 @@ Phase 1 established the approved design baseline before cloud implementation.
 - HIPAA Security Rule-aligned technical control objectives
 - HITRUST CSF-informed control mapping
 - Initial technical risk register
-- Controlled failure and attack scenario register
-- Final architecture diagram set
-- Project-level README
+- Failure and attack scenario register
+- Six finalized architecture diagrams
 
-## Architecture Diagrams
+Detailed phase documentation is maintained under `docs/`, `compliance/`, `attack-scenarios/`, and `diagrams/`.
 
-### 01 — Multi-Cloud Healthcare Security Architecture
+## Phase 2 — AWS Security Foundation & Network Segmentation
 
-![Multi-Cloud Healthcare Security Architecture](diagrams/architecture/01-multi-cloud-healthcare-security-architecture.png)
+**Status: In Progress**
 
-### 02 — AWS Detailed Security Architecture
+Phase 2 begins the deep AWS implementation using the Phase 1 architecture as the source of truth.
 
-![AWS Detailed Security Architecture](diagrams/architecture/02-aws-detailed-security-architecture.png)
+The phase focuses on establishing the network and security foundation before application, database, storage, WAF, detection, and response services are introduced.
 
-### 03 — GCP Detailed Security Architecture
+Primary objectives:
 
-![GCP Detailed Security Architecture](diagrams/architecture/03-gcp-detailed-security-architecture.png)
+- VPC isolation
+- Edge, application, and data-tier segmentation
+- Controlled routing
+- Security-group enforcement
+- Private data-tier boundary
+- Network traffic visibility through VPC Flow Logs
+- Minimal cost-conscious infrastructure
 
-### 04 — Synthetic ePHI Data Flow and Security Controls
+Primary control objectives:
 
-![Synthetic ePHI Data Flow and Security Controls](diagrams/data-flow/diagram-04-synthetic-ephi-data-flow-security-controls.png)
+- **CO-02 — Least Privilege**
+- **CO-03 — Private Data-Tier Isolation**
+- **CO-06 — Infrastructure Auditability**
 
-### 05 — Trust Boundary and Security Control Architecture
+The phase will follow the standard project lifecycle of implementation, validation, controlled failure, investigation, remediation, revalidation, evidence collection, destruction, and resource-removal verification.
 
-![Trust Boundary and Security Control Architecture](diagrams/trust-boundaries/diagram-05-trust-boundary-security-control-architecture.png)
+## Security Control Areas
 
-### 06 — HIPAA/HITRUST Security Control Mapping and Evidence Architecture
+The overall implementation is expected to cover:
 
-![HIPAA HITRUST Security Control Mapping and Evidence Architecture](diagrams/compliance/diagram-06-hipaa-hittrust-control-mapping-evidence-architecture.png)
+### AWS
 
-## Repository Structure
+- IAM / MFA / workload identity
+- VPC and network segmentation
+- ALB and AWS WAF
+- Application compute
+- RDS
+- S3
+- AWS KMS
+- Secrets Manager
+- CloudTrail
+- CloudWatch / VPC Flow Logs
+- AWS Config
+- GuardDuty
+- Security Hub
+- Macie where justified
+- EventBridge and response automation where justified
+- AWS Backup
 
-```text
-.
-├── attack-scenarios/
-├── compliance/
-├── diagrams/
-│   ├── architecture/
-│   ├── data-flow/
-│   ├── trust-boundaries/
-│   └── compliance/
-├── docs/
-│   ├── architecture/
-│   ├── data-classification/
-│   ├── data-flows/
-│   ├── decisions/
-│   ├── security-design/
-│   └── threat-model/
-├── evidence/
-├── policies/
-├── runbooks/
-├── scripts/
-├── templates/
-├── terraform/
-│   ├── aws/
-│   └── gcp/
-└── tests/
-```
+### GCP Control Equivalents
 
-## Engineering Methodology
+- Cloud IAM
+- VPC and firewall controls
+- HTTPS Load Balancing
+- Cloud Armor
+- Cloud SQL
+- Cloud Storage
+- Cloud KMS
+- Secret Manager
+- Cloud Audit Logs
+- Cloud Logging / Monitoring
+- Security Command Center
+- Sensitive Data Protection/DLP where justified
+- Backup and recovery controls
 
-Every hands-on implementation phase follows the same evidence-driven lifecycle:
+Not every service will be deployed in every phase. Service selection is driven by the approved architecture, security objective, evidence value, and cost.
+
+## Evidence-Driven Engineering Methodology
+
+Every hands-on phase follows:
 
 ```text
 CREATE
@@ -142,105 +197,43 @@ TERRAFORM DESTROY
 VERIFY RESOURCE REMOVAL
 ```
 
-Controlled failure injection is used to demonstrate that security controls can be detected, investigated, remediated, and revalidated rather than only proving a successful deployment.
-
-## AWS Control Direction
-
-The AWS implementation is expected to cover control areas including:
-
-- IAM and federated identity/MFA
-- VPC and network segmentation
-- ALB and AWS WAF
-- Application compute
-- RDS/database security
-- S3 object-storage security
-- AWS KMS encryption boundaries
-- Secrets Manager
-- CloudTrail
-- CloudWatch and VPC Flow Logs
-- AWS Config
-- GuardDuty
-- Security Hub
-- Macie where justified
-- EventBridge and response automation where justified
-- AWS Backup
-
-Not every service is deployed in every phase. Service selection is driven by the approved architecture, control objective, validation value, and cost constraints.
-
-## GCP Control Direction
-
-GCP demonstrates equivalent security objectives using cloud-native controls, including:
-
-- Cloud IAM
-- VPC and firewall controls
-- HTTPS Load Balancing
-- Cloud Armor
-- Private application and database boundaries
-- Cloud SQL
-- Cloud Storage
-- Cloud KMS
-- Secret Manager
-- Cloud Audit Logs
-- Cloud Logging and Monitoring
-- Security Command Center
-- Sensitive Data Protection/DLP where justified
-- Backup and recovery controls
-
-GCP is intentionally not treated as an exact mirror of AWS.
+A phase is not considered complete merely because Terraform applies successfully. Completion requires implementation, security validation, applicable failure handling, remediation, evidence, cleanup, documentation, and Git closure.
 
 ## Cost Guardrails
 
-The project is designed for short-lived, cost-conscious lab execution.
+- Prefer free-tier eligible resources where practical.
+- Avoid unnecessary managed services.
+- Avoid production-scale capacity for portfolio demonstrations.
+- Keep infrastructure short-lived.
+- Destroy resources after evidence collection.
+- Verify that resources are completely removed.
+- Introduce a managed service only when it materially improves the security objective or evidence quality.
 
-- Prefer free-tier eligible resources where practical
-- Avoid unnecessary managed services
-- Minimize resource count
-- Avoid production-scale capacity for demonstration purposes
-- Destroy infrastructure after evidence collection
-- Verify resource removal after `terraform destroy`
-- Evaluate cost versus security/evidence value before introducing a managed service
+## Repository Structure
 
-## Current Phase Roadmap
+```text
+.
+├── attack-scenarios/
+├── compliance/
+├── diagrams/
+├── docs/
+├── evidence/
+├── policies/
+├── runbooks/
+├── scripts/
+├── templates/
+├── terraform/
+│   ├── aws/
+│   └── gcp/
+└── tests/
+```
 
-| Phase | Focus | Status |
-|---|---|---|
-| Phase 1 | Healthcare Workload Design | **Complete** |
-| Phase 2 | AWS Security Foundation and Network Segmentation | **In Progress** |
-| Phase 3 | AWS IAM and Workload Identity | Planned |
-| Phase 4 | KMS Encryption Boundaries and Secrets | Planned |
-| Phase 5 | Application Compute, ALB and WAF | Planned |
-| Phase 6 | RDS and S3 Synthetic ePHI Data Plane | Planned |
-| Phase 7 | Audit Logging, Config and Observability | Planned |
-| Phase 8 | Threat Detection and Security Findings | Planned |
-| Phase 9 | Backup and Recovery Isolation | Planned |
-| Phase 10 | Incident Response and Automation | Planned |
-| Phase 11 | GCP Control-Equivalent Implementation | Planned |
-| Phase 12 | Cross-Cloud Attack Scenarios and Final Evidence | Planned |
+## Compliance Disclaimer
 
-## Compliance Positioning
-
-This repository uses HIPAA Security Rule terminology and HITRUST CSF-informed control objectives as engineering reference points.
-
-It is **not**:
-
-- a HIPAA compliance assessment
-- a HIPAA certification
-- a HITRUST certification
-- a legal or regulatory determination
-- a substitute for an organizational risk assessment or formal audit
-
-## Phase 1 Documentation
-
-- [Healthcare Workload Architecture](docs/architecture/healthcare-workload-architecture.md)
-- [Security Requirements](docs/security-design/security-requirements.md)
-- [Healthcare Data Classification](docs/data-classification/healthcare-data-classification.md)
-- [ePHI Data Flow](docs/data-flows/ephi-data-flow.md)
-- [Architecture Decision Record](docs/decisions/ADR-001-healthcare-workload-scope.md)
-- [Healthcare Threat Model](docs/threat-model/healthcare-threat-model.md)
-- [Phase 1 Control Objectives](compliance/control-mapping/phase-01-control-objectives.md)
-- [Phase 1 Risk Register](compliance/risk-assessments/phase-01-initial-risk-register.md)
-- [Phase 1 Failure Scenario Register](attack-scenarios/phase-01-failure-scenario-register.md)
+HIPAA and HITRUST references in this repository are used as engineering and control-design reference points. This project is not a compliance assessment, certification, legal determination, or substitute for an organizational risk assessment or formal audit.
 
 ## Project Status
 
-**Current state:** Phase 1 is complete and merged to `main`. Phase 2 — AWS Security Foundation and Network Segmentation — is now the active implementation phase.
+**Phase 1:** Complete and merged.
+
+**Phase 2:** AWS Security Foundation & Network Segmentation — implementation phase starting.
