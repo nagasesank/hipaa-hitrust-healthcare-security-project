@@ -1,2 +1,9 @@
-# Phase 2 — AWS Security Foundation & Network Segmentation
-# Terraform version and provider constraints will be defined here.
+terraform {
+  required_version = ">= 1.6.0"
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}

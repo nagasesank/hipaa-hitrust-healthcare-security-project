@@ -1,2 +1,23 @@
-# Phase 2 — AWS Security Foundation & Network Segmentation
-# AWS provider configuration will be defined here.
+terraform {
+  required_version = ">= 1.6.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "ap-south-1"
+
+  default_tags {
+    tags = {
+      Project     = "careconnect-health"
+      Environment = "dev"
+      ManagedBy   = "Terraform"
+      Phase       = "02"
+    }
+  }
+}
