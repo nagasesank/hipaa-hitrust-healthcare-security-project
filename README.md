@@ -8,7 +8,8 @@
 |---|---|---|
 | Phase 1 | Healthcare Workload Design | ✅ Complete |
 | Phase 2 | AWS Security Foundation | ✅ Complete |
-| Phase 3 | Next Security Control Implementation | ⏳ Not Started |
+| Phase 3 | AWS IAM Least Privilege | ✅ Complete |
+| Phase 4 | Next Security Control Implementation | ⏳ Not Started |
 
 ## Architecture Strategy
 
@@ -55,6 +56,28 @@ Completed:
 - Evidence collection
 
 Phase 2 was implemented, validated, deliberately failed, investigated, remediated, revalidated, destroyed, documented, and merged.
+
+### Phase 3 — AWS IAM Least Privilege
+
+Completed:
+
+- Patient API workload IAM role
+- Admin API workload IAM role
+- Lambda service trust relationships
+- Least-privilege application audit logging permissions
+- Resource-scoped CloudWatch Logs permissions
+- No unnecessary S3, RDS, IAM, or EC2 permissions
+- Controlled excessive-permission failure using `iam:ListRoles`
+- IAM permission investigation
+- Permission remediation
+- Revalidation of denied excessive access
+- Revalidation of legitimate log-write access
+- Terraform destroy
+- IAM resource-removal verification
+- Empty Terraform state verification
+- CLI-only evidence collection
+
+Phase 3 was implemented, validated, deliberately given an excessive permission, investigated, remediated, revalidated, destroyed, documented, and merged.
 
 ## Engineering Methodology
 
