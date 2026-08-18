@@ -12,3 +12,9 @@ module "network" {
 
   flow_log_retention_days = 7
 }
+module "iam" {
+  source = "../../modules/iam"
+
+  project_name = "careconnect-health"
+  environment  = "dev"
+}
